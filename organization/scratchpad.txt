@@ -1,0 +1,30 @@
+
+
+[co][row] - min 4,1 || 1,4,  && col*row = 8
+
+<flex-row>
+
+	<ul col>                        <ul col>
+
+		<li chip invisible>             <li chip invisible>
+		<li chip invisible>             <li chip invisible>
+		<li chip invisible>             <li chip invisible>
+		<li chip invisible>             <li chip invisible>
+
+	</ul col>                       </ul col>
+
+</flex>
+
+
+class - player1
+class - player2
+().toggleClass('playerX');
+
+
+ul - onclick =
+	- animation
+	- changeClass for bottom li with no class
+	- wright to let : "last"
+
+let last = holds pointer to last changed class and flipes it
+

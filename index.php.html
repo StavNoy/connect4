@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Lets Play</title>
+	<script
+			crossorigin="anonymous"
+			integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+			src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script src="scripts/puissance4.js"></script>
+	<script src="scripts/start.js"></script>
+</head>
+<body>
+
+<form>
+	<label>
+		<span>row count</span>
+		<input type="number" value="7" min="1" name="rows">
+	</label>
+	<label>
+		<span>column count</span>
+		<input type="number" value="7" min="1" name="cols">
+	</label>
+
+
+	<label>
+		<span>player1 color</span>
+		<input type="color" value="#FF0000" name="color1">
+	</label>
+	<label>
+		<span>player2 color</span>
+		<input type="color" value="#FFFF00" name="color2">
+	</label>
+
+	<button type="button" id="start">start new game</button>
+</form>
+
+
+</body>
+</html>

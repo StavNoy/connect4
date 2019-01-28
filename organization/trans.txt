@@ -1,0 +1,41 @@
+Connect 4
+
+JQuery plugin
+
+
+Game Rules:
+
+	- 2 players (traditionally: red and yellow);
+
+	- grid of variable dimensions
+
+	- in turn:
+		- player slides in piece
+		- piece falls to lowest available level
+
+	- ends game:
+		- win: 4 pieces align vertically, horizontally, or diagonally
+		- Tie: no more available spaces
+
+
+Guidelines:
+
+	- JQuery plugin, receives:
+		- grid size (x and y)
+		- colors (must be different)
+		+ bonuses
+
+	- Animations: min "fall to place animation"
+
+	- indicate player turn
+
+	- indicate score
+
+	- cancel last move (1 move min)
+
+
+Bonuses:
+
+	- artificial intelligence
+	- playable online
+	- "Game un-win-able"
