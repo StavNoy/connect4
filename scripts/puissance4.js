@@ -14,21 +14,37 @@
 
 		let currentPlayer = 1;
 		let lastChangedPiece;
+		let lastClass;
 
-		const grid_back = [];
-		const grid_front = $('<div />').addClass('game-grid');
+		function checkWin(piece, className) {
+			// const currClass = piece.hasClass('player1') ? 'player1' : "player2";
+		}
 
-		for (let i = 0; i < settings.cols; i++) {
-			grid_front.append($('<ul />').addClass('col').click(() => {
-				const lastFree = this.children(":not([class*='player'])").last();
+		function addPiece(col) {
+			return () => {
+				const lastFree = col.children(":not([class*='player'])").last();
 				if (lastFree.length > 0) {
-					lastFree.toggleClass(' .player' + currentPlayer);
+					lastClass = ' .player' + currentPlayer;
+					lastFree.toggleClass(lastClass);
 					currentPlayer = (currentPlayer === 1) ? 2 : 1;
 					lastChangedPiece = lastFree;
-					//TODO animation;
+					checkWin(lastFree, lastClass);
 				}
-			}));
+				return col;
+			};
 		}
+
+
+
+
+		const grid_front = $('<div />').addClass('game-grid');
+		for (let i = 0; i < settings.cols; i++) {
+			grid_front.append($('<ul />')
+				.addClass('col')
+				.click(addPiece(this)));
+		}
+
+
 
 		return this;
 	};
