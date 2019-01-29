@@ -14,47 +14,70 @@
 			return this;
 		}
 
+		$('.puissance4').remove();
+
 		/* variables */
 		let currentPlayer = 'player1';
 		let lastChangedPiece;
-		/* @var grid_back - jQuery ul[col]li[row]*/
-		const grid_back = [];
+		const grid_back = []; //* @var grid_back - jQuery [col]li[row]*/
+
+		/* elements */
+		const gameArea = $('<div />').addClass('puissance4');
+		gameArea.append($ ('<style />').attr('type', 'text/css')
+			.text(`.player1: {color: ${options.color1}; } .player2: {color: ${options.color2};}`));
 		const grid_front = $('<div />').addClass('game-grid');
+		const turn = $('<h3 />').text('player1 ').addClass('player 1');
+		const undo = $('<button />').text('undo').click(() => {
+			if (lastChangedPiece) {
+				lastChangedPiece.removeClass('player1 player2');
+			}
+		});
 
 
 		function findLastFreeI(colI) {
-			for (let rowI = grid_back[colI].length -1; rowI >= 0; rowI++) {
-				if (/player[12]/.test(grid_back[colI][rowI].attr('class'))) {
+			for (let rowI = grid_back[colI].length -1; rowI >= 0; rowI--) {
+				if (!/player[12]/.test(grid_back[colI][rowI].attr('class'))) {
 					return rowI;
 				}
 			}
 			return -1;
 		}
 
+		function between_0_and(limitInt, subjectInt) {
+			return (subjectInt >= 0 && subjectInt < limitInt) || (subjectInt <= 0 && subjectInt > limitInt);
+		}
+
 		function checkWin(colI, rowI, className) {
+
 			function checkDirection(rowMod, colMod) {
+
 				let inDirection = 0;
-				for (let c = colI + colMod, r = rowI + rowMod; c < grid_back.length, r < grid_back[colI].length; c += colMod, r += rowMod) {
-					if (!grid_back[colI][r].hasClass(className)) {
+				for (let r = rowI + rowMod, c = colI + colMod; between_0_and(grid_back[colI].length, r) && between_0_and(grid_back.length, c); r += rowMod, c += colMod) {
+					if (!grid_back[c][r].hasClass(className)) {
 						break;
 					}
 					inDirection++;
 				}
 				return inDirection;
 			}
+
+
 			const win =  (1 + checkDirection(+1, 0) + checkDirection(-1, 0)) >= 4
 				|| (1 + checkDirection(0, +1) + checkDirection(0, -1)) >= 4
 				|| (1 + checkDirection(+1, +1) + checkDirection(-1, -1)) >= 4
 				|| (1 + checkDirection(-1, +1) + checkDirection(+1, -1)) >= 4;
 
+
+
 			if (win) {
 				alert(currentPlayer + ' Won !');
-
+				gameArea.find('button, ul').each(function(index){
+					$(this).attr('onclick', null).off('click');
+				});
 			}
 		}
 
 		function addPiece(colI) {
-			const rowC = grid_back[colI].length;
 			return () => {
 				const lastFreeI = findLastFreeI(colI);
 				if (lastFreeI !== -1) {
@@ -62,6 +85,7 @@
 					lastFree.addClass(currentPlayer);
 					checkWin(colI, lastFreeI, currentPlayer);
 					currentPlayer = (currentPlayer === 'player1') ? 'player2' : 'player1';
+					turn.text(currentPlayer).toggleClass('player1 player2');
 					lastChangedPiece = lastFree;
 				}
 				return grid_back[colI];
@@ -70,24 +94,21 @@
 
 		// const lastFree = col.children(":not([class*='player'])").last();
 
-
-
 		/* setup */
 		for (let colI = 0; colI < settings.cols; colI++) {
+			grid_back.push([]);
 			const col = $('<ul />')
 				.addClass('col')
 				.click(addPiece(colI));
 			grid_front.append(col);
-			grid_back.push([]);
 			for (let rowI = 0; rowI < settings.rows; rowI++) {
-				const cell = $('<li />');
-				col.append(cell);
+				const cell = $('<li />').text('X');
 				grid_back[colI].push(cell);
+				col.append(cell);
 			}
 		}
 
-
-
+		$('body').append((gameArea).append(turn).append(grid_front).append(undo));
 		return this;
 	};
 }( jQuery ));
