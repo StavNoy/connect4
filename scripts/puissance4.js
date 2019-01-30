@@ -24,7 +24,7 @@
 		/* elements */
 		const gameArea = $('<div />').addClass('puissance4');
 		gameArea.append($ ('<style />').attr('type', 'text/css')
-			.text(`.player1: {color: ${options.color1}; } .player2: {color: ${options.color2};}`));
+			.text(`.puissance4 .player1 {color: ${options.color1}; } .puissance4 .player2 {color: ${options.color2};}`));
 		const grid_front = $('<div />').addClass('game-grid');
 		const turn = $('<h3 />').text('player1 ').addClass('player 1');
 		const undo = $('<button />').text('undo').click(() => {
