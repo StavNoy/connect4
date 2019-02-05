@@ -1,5 +1,6 @@
 (function( $ ) {
 	$.fn.puissance4 = function(options) {
+
 		const settings = $.extend({
 			rows: 7,
 			cols: 7,
@@ -18,7 +19,7 @@
 
 		/* variables */
 		let currentPlayer = 'player1';
-		let lastChangedPiece;
+		const history = [];
 		const grid_back = []; //* @var grid_back - jQuery [col]li[row]*/
 
 		/* elements */
@@ -28,8 +29,10 @@
 		const grid_front = $('<div />').addClass('game-grid');
 		const turn = $('<h3 />').text('player1 ').addClass('player 1');
 		const undo = $('<button />').text('undo').click(() => {
-			if (lastChangedPiece) {
-				lastChangedPiece.removeClass('player1 player2');
+			const lastPiece = history.pop();
+			if (lastPiece) {
+				lastPiece.removeClass('player1 player2');
+				currentPlayer = currentPlayer === 'player1' ? 'player2' : 'player1';
 			}
 		});
 
@@ -72,7 +75,7 @@
 			if (win) {
 				alert(currentPlayer + ' Won !');
 				gameArea.find('button, ul').each(function(index){
-					$(this).attr('onclick', null).off('click');
+					$(this).prop('disabled',true).prop('onclick', null).off('click');
 				});
 			}
 		}
@@ -86,7 +89,7 @@
 					checkWin(colI, lastFreeI, currentPlayer);
 					currentPlayer = (currentPlayer === 'player1') ? 'player2' : 'player1';
 					turn.text(currentPlayer).toggleClass('player1 player2');
-					lastChangedPiece = lastFree;
+					history.push(lastFree);
 				}
 				return grid_back[colI];
 			};
