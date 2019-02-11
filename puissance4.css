@@ -1,0 +1,35 @@
+.puissance4 {
+  background-color: black;
+}
+.puissance4 .game-grid {
+  display: flex;
+  flex-direction: row;
+}
+.puissance4 ul {
+  display: flex;
+  flex-direction: column;
+  border: thin solid green;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.puissance4 ul:hover {
+  outline: thick solid green;
+}
+.puissance4 li {
+  border: thin solid green;
+  color: black;
+  width: 2em;
+  height: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.puissance4 .player1 {
+  color: red;
+}
+.puissance4 .player2 {
+  color: yellow;
+}
+
+/*# sourceMappingURL=puissance4.css.map */
